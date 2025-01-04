@@ -1,0 +1,9 @@
+fastapi
+loguru
+pydantic[email]
+pydantic_settings
+alembic
+sqlalchemy
+psycopg2-binary
+apscheduler
+passlib
