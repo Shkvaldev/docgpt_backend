@@ -1,9 +1,12 @@
-fastapi
+fastapi[standard]
 loguru
 pydantic[email]
 pydantic_settings
 alembic
+greenlet
+asyncpg
 sqlalchemy
 psycopg2-binary
 apscheduler
 passlib
+PyJWT

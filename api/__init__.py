@@ -1,11 +1,12 @@
+import asyncio
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 
-from .v1 import routers
+from .v1 import router as router_v1
 
 app = FastAPI(
-    title='API',
+    title='DocGPT API',
     redoc_url=None
 )
 
@@ -17,9 +18,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+routers = [router_v1]
 [app.include_router(_router) for _router in routers]
 
 def create_app():
-    # Setup config here if needed
     logger.debug('Starting API ...')
     return app

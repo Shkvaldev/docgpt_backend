@@ -1,2 +1,4 @@
+pgdata
+.env
 .venv
 __pycache__
