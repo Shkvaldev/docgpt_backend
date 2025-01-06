@@ -92,10 +92,10 @@ class BaseService:
             await session.refresh(db_obj)
             return db_obj
 
-    async def delete(self, db_model, id_: [str, int]):
+    async def delete(self, db_model, id: [str, int]):
         """
         Удаление записи из базы данных 
         """
         async with self.get_session() as session:
-            await session.execute(delete(db_model).where(db_model.id == id_))
+            await session.execute(delete(db_model).where(db_model.id == id))
             await session.commit()

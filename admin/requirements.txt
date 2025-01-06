@@ -1,0 +1,6 @@
+flask
+pydantic
+pydantic_settings
+loguru
+sqlalchemy
+psycopg2-binary

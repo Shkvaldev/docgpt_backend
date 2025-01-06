@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import string
 import random
+from loguru import logger
 from passlib.hash import pbkdf2_sha512
 from fastapi import HTTPException, BackgroundTasks
 from pydantic import BaseModel, EmailStr
@@ -50,7 +51,6 @@ class UserService:
         return {
             'status': 'ok'
         }
-
 
     async def get(self, user: User, id: int):
         """
@@ -142,4 +142,20 @@ class UserService:
             'token': generate_token(email=email),
             'user_id': user.id,
             'name': user.name
+        }
+
+    async def change_password(self, user: User, new_password: str):
+        """
+        Изменение пароля
+        """
+        try:
+            await BaseService().update(user, password_hash=pbkdf2_sha512.hash(new_password))
+        except Exception as e:
+            logger.error(f'Failed to update password for `{user.email}`: {e}')
+            raise HTTPException(
+               status_code=500,
+               detail='Failed to update password due to internal error'
+            )
+        return {
+            'status': 'ok'
         }
