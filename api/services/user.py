@@ -1,4 +1,6 @@
-from datetime import datetime
+from datetime import datetime, timedelta
+import string
+import random
 from passlib.hash import pbkdf2_sha512
 from fastapi import HTTPException
 from pydantic import BaseModel, EmailStr
@@ -72,7 +74,7 @@ class UserService:
 
     async def login(self, email: str, password: str):
         """
-        Авторизация (проверка пароля + генерация токена)
+        Авторизация (проверка пароля)
         """
         user = await BaseService().get(self.model, email=email)
         if not user:
@@ -80,10 +82,58 @@ class UserService:
                 status_code=404,
                 detail='User was not found'
             )
+        # Проверка на блок
+        if user.is_blocked:
+            raise HTTPException(
+                status_code=401,
+                detail='You are banned'
+            )
         if not pbkdf2_sha512.verify(password, user.password_hash):
             raise HTTPException(
                 status_code=401,
                 detail='Wrong password'
+            )
+        # Генерация одноразового кода
+        code = "".join(random.choices(string.digits, k=6)) 
+        expiration = datetime.now() + timedelta(minutes=15)
+        # TODO: отправлять отсюда код на почту
+        await BaseService().update(user, last_code=code, code_expiration=expiration)
+        return {
+            'status': 'ok',
+            'detail': 'Code is sent'
+        }
+
+    async def verify_code(self, email: str, code: str):
+        """
+        Верификация пользователя (проверка кода + генерация токена)
+        """
+        user = await BaseService().get(self.model, email=email)
+        if not user:
+            raise HTTPException(
+                status_code=404,
+                detail='User was not found'
+            )
+        # Проверка на наличие кода
+        if not user.last_code:
+            raise HTTPException(
+                status_code=404,
+                detail='You did not try to log in'
+            )
+        current_code = user.last_code
+        expiration_time = user.code_expiration
+        # Обнуление текущего кода
+        await BaseService().update(user, last_code=None, code_expiration=None)
+        # Проверка времени действия кода 
+        if datetime.now() > expiration_time:
+            raise HTTPException(
+                status_code=401,
+                detail='Code has been expired, request new please'
+            )
+        # Проверка соответствия кода
+        if current_code != code:
+            raise HTTPException(
+                status_code=401,
+                detail='Wrong code'
             )
         return {
             'status': 'ok',
