@@ -2,12 +2,12 @@ from datetime import datetime, timedelta
 import string
 import random
 from passlib.hash import pbkdf2_sha512
-from fastapi import HTTPException
+from fastapi import HTTPException, BackgroundTasks
 from pydantic import BaseModel, EmailStr
 
 from api.services.base import BaseService
 from api.db.models import User
-from api.utils import generate_token
+from api.utils import generate_token, send_verification_code
 from config import settings
 
 
@@ -72,7 +72,7 @@ class UserService:
             'user': await UserService().generate_user_dict(user=user_db)
         }
 
-    async def login(self, email: str, password: str):
+    async def login(self, email: str, password: str, bg_tasks: BackgroundTasks):
         """
         Авторизация (проверка пароля)
         """
@@ -94,9 +94,11 @@ class UserService:
                 detail='Wrong password'
             )
         # Генерация одноразового кода
-        code = "".join(random.choices(string.digits, k=6)) 
+        code = "".join(random.choices(string.digits, k=6))
+        # Отправка кода по email
+        bg_tasks.add_task(send_verification_code, email, code)
+        # Код истечёт через 15 минут
         expiration = datetime.now() + timedelta(minutes=15)
-        # TODO: отправлять отсюда код на почту
         await BaseService().update(user, last_code=code, code_expiration=expiration)
         return {
             'status': 'ok',

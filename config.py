@@ -7,6 +7,10 @@ class Settings(BaseSettings):
     postgres_password: str
     postgres_db: str
 
+    email_address: str
+    email_password: str
+    email_server: str
+
     jwt_secret: str
 
     api_link: str

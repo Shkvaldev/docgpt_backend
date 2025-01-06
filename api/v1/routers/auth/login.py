@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, BackgroundTasks
 from pydantic import BaseModel, EmailStr
 
 from api.services.user import UserService
@@ -12,5 +12,5 @@ class AuthSchema(BaseModel):
     password: str
 
 @router.post('')
-async def route(schema: AuthSchema):
-    return await UserService().login(email=schema.email, password=schema.password)
+async def route(schema: AuthSchema, bg_tasks: BackgroundTasks):
+    return await UserService().login(email=schema.email, password=schema.password, bg_tasks=bg_tasks)
