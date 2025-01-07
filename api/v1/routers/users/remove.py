@@ -3,7 +3,7 @@ from pydantic import BaseModel, EmailStr
 from loguru import logger
 
 from api.services.base import BaseService
-from api.db.models import User
+from db.models import User
 from api.utils import get_current_user
 
 router = APIRouter(

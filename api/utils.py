@@ -8,7 +8,7 @@ from loguru import logger
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 
-from api.db.models import User
+from db.models import User
 from api.services.base import BaseService
 from config import settings
 

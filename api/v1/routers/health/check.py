@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from api.db.database import create_tables
+from db.database import create_tables
 
 router = APIRouter(
     prefix="/check"

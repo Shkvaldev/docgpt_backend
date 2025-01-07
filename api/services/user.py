@@ -7,7 +7,7 @@ from fastapi import HTTPException, BackgroundTasks
 from pydantic import BaseModel, EmailStr
 
 from api.services.base import BaseService
-from api.db.models import User
+from db.models import User
 from api.utils import generate_token, send_verification_code
 from config import settings
 

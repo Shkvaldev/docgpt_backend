@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 
 from api.services.user import UserService
-from api.db.models import User
+from db.models import User
 from api.utils import get_current_user
 
 router = APIRouter(

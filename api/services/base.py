@@ -1,6 +1,6 @@
 from sqlalchemy import Select, delete
 
-from api.db.database import new_session
+from db.database import new_session
 
 class BaseService:
     """
