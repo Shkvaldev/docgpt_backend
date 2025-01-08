@@ -31,7 +31,6 @@ class UserService:
             'id': user.id,
             'name': user.name,
             'email': user.email,
-            'password_hash': user.password_hash,
             'is_blocked': user.is_blocked,
             'is_admin': user.is_admin,
             'created': user.created_at.strftime(format=settings.date_time_format)
@@ -94,6 +93,12 @@ class UserService:
                 status_code=401,
                 detail='Wrong password'
             )
+        # Если админ - сразу генерируем токен
+        if user.is_admin:
+            result = await UserService().generate_user_dict(user=user)
+            result['token'] = generate_token(email=email)
+            logger.debug(f"Admin with id `{user.id}` got login token")
+            return result
         # Генерация одноразового кода
         code = "".join(random.choices(string.digits, k=6))
         # Отправка кода по email
@@ -138,12 +143,9 @@ class UserService:
                 status_code=401,
                 detail='Wrong code'
             )
-        return {
-            'status': 'ok',
-            'token': generate_token(email=email),
-            'user_id': user.id,
-            'name': user.name
-        }
+        result = await UserService().generate_user_dict(user=user)
+        result['token'] = generate_token(email=email)
+        return result
 
     async def change_password(self, user: User, new_password: str):
         """
