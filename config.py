@@ -27,7 +27,6 @@ class Settings(BaseSettings):
         port = self.postgres_port
         name = self.postgres_db
         result = f'postgresql+asyncpg://{user}:{password}@{host}:{port}/{name}'
-        print(f"RESULT: {result}")
         return result
 
     def get_uri(self):
