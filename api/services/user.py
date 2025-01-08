@@ -33,6 +33,7 @@ class UserService:
             'email': user.email,
             'password_hash': user.password_hash,
             'is_blocked': user.is_blocked,
+            'is_admin': user.is_admin,
             'created': user.created_at.strftime(format=settings.date_time_format)
         }
 
