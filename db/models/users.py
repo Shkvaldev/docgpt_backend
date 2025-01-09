@@ -1,5 +1,6 @@
 import datetime
 from sqlalchemy import Column, String, Integer, DateTime, Boolean
+from sqlalchemy.orm import Relationship
 
 from ..base_model import Model
 
@@ -18,3 +19,5 @@ class User(Model):
     last_code = Column(String, nullable=True)
     code_expiration = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.now)
+
+    chats = Relationship('Chat', back_populates='user', cascade='all, delete-orphan')

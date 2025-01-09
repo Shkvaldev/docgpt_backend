@@ -1,0 +1,8 @@
+1)Вкидываемся в sqlachemy
+
+2)Работа с чатами
+ - роуты
+ - бд(id, user_id) --> messages (id, chat_id, text, role, date, time)
+ - crud
+
+3)Работа с сообщениям
