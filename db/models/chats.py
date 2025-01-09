@@ -11,7 +11,7 @@ class Chat(Model):
     __tablename__ = "chats"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    user_id = Column(Integer, ForeignKey("users.id"))
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     created_at = Column(DateTime, default=datetime.datetime.now)
 
     user = Relationship('User', back_populates='chats', cascade='all')
