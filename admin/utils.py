@@ -23,7 +23,6 @@ def auth_required(func):
     def wrapper(*args, **kwargs):
         if 'token' in session:
             if check_token(session.get('token')):
-                logger.debug("Passed token verification")
                 return func(*args, **kwargs)
         return redirect(url_for('login'))
 

@@ -1,5 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-Тута данные 0w0
+
+<main class="flex-grow container mx-auto p-4">
+
+    <!-- Центральный виджет -->
+    <div class="bg-gray-800 p-4 rounded-lg shadow-xl mt-4">
+        <h2 class="text-lg font-bold mb-2">Конфигурация</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          {% for name, value in settings.items() %}
+          <div class="bg-gray-700 p-4 rounded-lg shadow-md">
+              <h3 class="text-lg font-semibold">{{ name }}</h3>
+              <p class="text-gray-300">{{ value }}</p>
+          </div>
+          {% endfor %}
+    </div>
+
+</main>
+
 {% endblock %}

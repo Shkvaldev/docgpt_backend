@@ -4,6 +4,7 @@ from loguru import logger
 from config import settings
 
 from admin.utils import auth_required, auth
+from admin.db.utils import generate_settings_dict
 from admin.routers import routers
 
 app = Flask(__name__)
@@ -16,7 +17,7 @@ CORS(app)
 @app.get('/')
 @auth_required
 def index(): 
-    return render_template('index.html')
+    return render_template('index.html', settings=generate_settings_dict(settings))
 
 # Авторизация
 @app.route('/login', methods=['GET', 'POST'])

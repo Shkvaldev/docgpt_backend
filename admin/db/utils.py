@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, delete, Select
 from sqlalchemy.orm import sessionmaker
-from config import settings
+from config import settings, Settings
 
 from db.base_model import Model
 
@@ -51,3 +51,13 @@ def basic_update(db_obj: Model, **obj_in_data):
 def basic_delete(db_model, id_: int):
     session.execute(delete(db_model).where(db_model.id == id_))
     session.commit()
+
+def generate_settings_dict(settings: Settings):
+    if not settings:
+        return {}
+    return {
+        'POSTGRES HOST': settings.postgres_host,
+        'POSTGRES PORT': settings.postgres_port,
+        'EMAIL SENDER': settings.email_address,
+        'API LINK': settings.api_link
+    }
