@@ -16,13 +16,13 @@ CORS(app)
 @app.get('/')
 @auth_required
 def index(): 
-    return render_template('index.html', authorized=True)
+    return render_template('index.html')
 
 # Авторизация
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
-        return render_template('login.html')
+        return render_template('login.html', not_authorized=True)
     # Логин в API
     logger.success("Logging in")
     email = request.form.get('email')
@@ -30,10 +30,17 @@ def login():
     try:
         data = auth(email=email, password=password)
     except Exception as e:
-        return render_template('error.html', error=str(e))
+        return render_template('error.html', not_authorized=True, error=str(e))
     session['token'] = data['token']
     session['user_info'] = data
     return redirect(url_for('index'))
+
+
+# Отлавливаем
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('error.html', error='404 - Не найдено :(', not_authorized=True)
+
 
 # Регистрация роутов
 [app.register_blueprint(_route) for _route in routers]

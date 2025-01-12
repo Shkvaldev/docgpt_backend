@@ -1,6 +1,9 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 from admin.utils import auth_required
+from db.models import User
+from admin.db.utils import basic_get_all_asc
+from admin.db.users import generate_user_dict 
 
 router = Blueprint(
     name='users_router_all',
@@ -11,4 +14,7 @@ router = Blueprint(
 @router.get('/all')
 @auth_required
 def route():
-    pass 
+    return render_template('users/all.html', users=[
+            generate_user_dict(user=user)
+            for user in basic_get_all_asc(User)
+        ]) 

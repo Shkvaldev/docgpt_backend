@@ -1,6 +1,7 @@
 from flask import Blueprint
 
 from .all import router as router_all
+from .chats import router as router_chats
 
 router = Blueprint(
     name='users_router',
@@ -9,7 +10,8 @@ router = Blueprint(
 )
 
 routers = [
-    router_all
+    router_all,
+    router_chats
 ]
 
 [router.register_blueprint(_router) for _router in routers]
