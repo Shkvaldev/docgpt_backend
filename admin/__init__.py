@@ -4,6 +4,7 @@ from loguru import logger
 from config import settings
 
 from admin.utils import auth_required, auth
+from admin.routers import routers
 
 app = Flask(__name__)
 app.secret_key = 'supersecret'
@@ -33,6 +34,9 @@ def login():
     session['token'] = data['token']
     session['user_info'] = data
     return redirect(url_for('index'))
+
+# Регистрация роутов
+[app.register_blueprint(_route) for _route in routers]
 
 def create_app():
     return app
