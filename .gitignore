@@ -6,3 +6,4 @@ pgdata
 __pycache__
 user_chats_chats_test.py
 static
+venv
