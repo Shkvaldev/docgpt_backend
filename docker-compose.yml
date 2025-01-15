@@ -22,6 +22,7 @@ services:
       - 9000:80
     volumes:
       - ./assets:/app/assets
+      - ./static:/app/static
     depends_on:
       - db
   admin:

@@ -4,6 +4,8 @@ from datetime import datetime, timezone, timedelta
 import smtplib
 from email.message import EmailMessage
 from loguru import logger
+import uuid
+import os
 
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
@@ -76,3 +78,12 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
             detail='Invalid token',
         )
 
+def generate_unique_filename(original_filename: str) -> str:
+    """
+    Генерирует уникальное имя файла, сохраняя оригинальное расширение
+    """
+    # Получаем расширение оригинального файла
+    _, extension = os.path.splitext(original_filename)
+    
+    # Генерируем уникальное имя и добавляем расширение
+    return f"{uuid.uuid4()}{extension}"

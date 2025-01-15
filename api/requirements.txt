@@ -10,3 +10,4 @@ psycopg2-binary
 apscheduler
 passlib
 PyJWT
+aiofiles

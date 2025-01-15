@@ -1,7 +1,7 @@
 from db.models.users import User
 from db.models.chats import Chat
 from db.models.messages import Message
-from db.models.files import File
+from db.models.files import File_doc
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from db.base_model import Model as Base
@@ -28,7 +28,7 @@ session.add(chat)
 session.commit()
 
 # 3. Создаем файл
-file = File(path="/path/to/file.txt")
+file = File_doc(path="/path/to/file.txt")
 session.add(file)
 session.commit()
 
@@ -72,6 +72,6 @@ session.commit()
 print("\nПроверка каскадного удаления:")
 print(f"Осталось чатов: {len(session.query(Chat).all())}")
 print(f"Осталось сообщений: {len(session.query(Message).all())}")
-print(f"Осталось файлов: {len(session.query(File).all())}")
+print(f"Осталось файлов: {len(session.query(File_doc).all())}")
 
 session.close()
