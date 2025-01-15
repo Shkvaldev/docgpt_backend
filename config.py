@@ -15,6 +15,7 @@ class Settings(BaseSettings):
 
     api_link: str
     files_dir: str = 'assets/images'
+    upload_dir: str = 'static'
     date_format: str = '%Y-%m-%d'
     date_time_format: str = '%Y-%m-%d %H:%M'
 

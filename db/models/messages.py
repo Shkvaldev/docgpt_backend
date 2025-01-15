@@ -17,5 +17,5 @@ class Message(Model):
     chat_id = Column(Integer, ForeignKey("chats.id"))
     created_at = Column(DateTime, default=datetime.datetime.now)
 
-    chat = Relationship('Chat', back_populates='messages', cascade='all')
-    file = Relationship('File', back_populates='message', cascade='all, delete-orphan', uselist=False, single_parent=True,)
+    chat = Relationship('Chat', back_populates='messages')
+    file = Relationship('File_doc', back_populates='message', cascade='all, delete-orphan', uselist=False, single_parent=True)

@@ -14,5 +14,5 @@ class Chat(Model):
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     created_at = Column(DateTime, default=datetime.datetime.now)
 
-    user = Relationship('User', back_populates='chats', cascade='all')
+    user = Relationship('User', back_populates='chats')
     messages = Relationship('Message', back_populates='chat', cascade='all, delete-orphan')

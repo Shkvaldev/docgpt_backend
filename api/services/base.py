@@ -99,3 +99,10 @@ class BaseService:
         async with self.get_session() as session:
             await session.execute(delete(db_model).where(db_model.id == id))
             await session.commit()
+    async def execute_query(self, query):
+        """
+        Выполнение произвольного запроса
+        """
+        async with self.get_session() as session:
+            result = await session.execute(query)
+            return result.scalar_one_or_none()

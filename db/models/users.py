@@ -20,4 +20,5 @@ class User(Model):
     code_expiration = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.now)
 
+    files = Relationship('File_doc', back_populates='user', cascade='all, delete-orphan')
     chats = Relationship('Chat', back_populates='user', cascade='all, delete-orphan')
