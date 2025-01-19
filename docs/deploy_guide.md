@@ -17,7 +17,19 @@ cd <имя проекта>
 cp .env.example .env
 ```
 
-3) Осталось только запустить:
+3) Далее запускаем базу данных и применяем миграции:
+
+```bash
+sudo docker compose up -d db
+
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r api/requirements.txt
+
+alembic upgrade head
+```
+
+4) Теперь поднимаем всё остальное:
 
 ```bash
 sudo docker compose up -d
