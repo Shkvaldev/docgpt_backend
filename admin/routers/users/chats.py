@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from quart import Blueprint, render_template
 
 from admin.utils import auth_required
 from db.models import Chat
@@ -13,8 +13,8 @@ router = Blueprint(
 # Показ всех чатов пользователя
 @router.get('/chats/get/<id>')
 @auth_required
-def route(id):
-    return render_template('users/chats.html', chats=[
+async def route(id):
+    return await render_template('users/chats.html', chats=[
             generate_chat_dict(chat=chat)
             for chat in basic_get_all_asc(Chat, user_id=id)
         ]) 

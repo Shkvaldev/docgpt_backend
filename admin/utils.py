@@ -3,7 +3,7 @@ from functools import wraps
 from loguru import logger
 import requests
 
-from flask import session, url_for, redirect
+from quart import session, url_for, redirect, g
 
 from config import settings
 
@@ -20,10 +20,11 @@ def check_token(token: str) -> bool:
 
 def auth_required(func):
     @wraps(func)
-    def wrapper(*args, **kwargs):
-        if 'token' in session:
-            if check_token(session.get('token')):
-                return func(*args, **kwargs)
+    async def wrapper(*args, **kwargs):
+        async with g.app.app_context():
+            if 'token' in session:
+                if check_token(session.get('token')):
+                    return await func(*args, **kwargs)
         return redirect(url_for('login'))
 
     return wrapper

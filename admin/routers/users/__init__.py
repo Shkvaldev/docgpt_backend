@@ -1,4 +1,4 @@
-from flask import Blueprint
+from quart import Blueprint
 
 from .all import router as router_all
 from .chats import router as router_chats

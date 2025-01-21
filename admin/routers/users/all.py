@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from quart import Blueprint, render_template
 
 from admin.utils import auth_required
 from db.models import User
@@ -13,8 +13,8 @@ router = Blueprint(
 # Показ всех пользователей
 @router.get('/all')
 @auth_required
-def route():
-    return render_template('users/all.html', users=[
+async def route():
+    return await render_template('users/all.html', users=[
             generate_user_dict(user=user)
             for user in basic_get_all_asc(User)
         ]) 
