@@ -4,7 +4,6 @@ PyJWT
 loguru
 pydantic
 pydantic_settings
-loguru
 sqlalchemy
 psycopg2-binary
-requests
+aiohttp

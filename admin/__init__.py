@@ -30,7 +30,7 @@ async def login():
     email = form.get('email')
     password = form.get('password')
     try:
-        data = auth(email=email, password=password)
+        data = await auth(email=email, password=password)
     except Exception as e:
         return await render_template('error.html', not_authorized=True, error=str(e))
     session['token'] = data['token']
