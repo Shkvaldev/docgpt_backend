@@ -10,6 +10,16 @@ services:
       - 5432:5432
     volumes:
       - ./pgdata:/var/lib/postgresql/data
+  mongodb:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${POSTGRES_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongodb_data:/data/db
   api:
     build:
       dockerfile: api.dockerfile
@@ -25,6 +35,7 @@ services:
       - ./static:/app/static
     depends_on:
       - db
+      - mongodb
   admin:
     build:
       dockerfile: admin.dockerfile
@@ -36,3 +47,4 @@ services:
       - ./assets:/app/assets
     depends_on:
       - db
+      - mongodb

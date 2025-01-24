@@ -1,6 +1,7 @@
 test.db
 .cache
 pgdata
+mongodb_data
 .env
 .venv
 __pycache__
