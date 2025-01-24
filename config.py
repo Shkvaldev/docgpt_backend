@@ -38,5 +38,12 @@ class Settings(BaseSettings):
         name = self.postgres_db
         return f'postgresql://{user}:{password}@{host}:{port}/{name}'
 
+    def get_mongo_uri(self):
+        user = self.postgres_user
+        password = self.postgres_password
+        host = self.postgres_host
+        name = self.postgres_db
+        return f'mongodb://{user}:{password}@{host}:27017'
+
 
 settings = Settings()

@@ -11,3 +11,4 @@ apscheduler
 passlib
 PyJWT
 aiofiles
+beanie
