@@ -1,8 +1,8 @@
 from quart import Blueprint
 
 from .all import router as router_all
-from .chats import router as router_chats
-from .chat import router as router_chat
+from .get_chats import router as router_get_chats
+from .get_chat import router as router_get_chat
 
 router = Blueprint(
     name='users_router',
@@ -12,8 +12,8 @@ router = Blueprint(
 
 routers = [
     router_all,
-    router_chats,
-    router_chat
+    router_get_chats,
+    router_get_chat
 ]
 
 [router.register_blueprint(_router) for _router in routers]

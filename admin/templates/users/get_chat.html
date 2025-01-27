@@ -4,7 +4,7 @@
 
 <div class="bg-gray-800 p-4 rounded-lg shadow-lg border border-gray-300">
     <h2 class="text-lg font-bold mb-2">Пользовательский чат #{{ chat_id }}</h2>
-    <a href="/users/chats/get/{{ user_id }}" class="text-blue-500 no-underline">Вернуться к пользователю</a>
+    <a href="/users/{{ user_id }}/chats/get" class="text-blue-500 no-underline">Вернуться к пользователю</a>
     
     {% if messages|length > 0 %}
       {% for message in messages %}
