@@ -1,6 +1,10 @@
-flask
+quart
+quart-cors
+PyJWT
+loguru
 pydantic
 pydantic_settings
-loguru
 sqlalchemy
 psycopg2-binary
+aiohttp
+beanie

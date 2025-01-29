@@ -1,9 +1,9 @@
 test.db
 .cache
 pgdata
+mongodb_data
 .env
 .venv
 __pycache__
 user_chats_chats_test.py
 static
-venv

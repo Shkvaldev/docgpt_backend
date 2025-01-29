@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="bg-gray-800 p-4 rounded-lg shadow-lg border border-gray-300">
+    <h2 class="text-lg font-bold mb-2">Пользовательский чат #{{ chat_id }}</h2>
+    <a href="/users/chats/get/{{ user_id }}" class="text-blue-500 no-underline">Вернуться к пользователю</a>
+    
+    {% if messages|length > 0 %}
+      {% for message in messages %}
+        
+        <!-- Определение роли -->
+        {% if message["role"] == "bot" %}
+          <div class="chat chat-start">
+            <div class="chat-header">
+              Бот
+              <time class="text-xs opacity-50">{{ message["created_at"] }}</time>
+            </div>
+        {% else %}
+          <div class="chat chat-end">
+            <div class="chat-header">
+              Пользователь
+              <time class="text-xs opacity-50">{{ message["created_at"] }}</time>
+            </div>
+        {% endif %}
+          
+          <!-- Содержание сообщения -->
+          <div class="chat-bubble">{{ message["content"] }}</div>
+          
+          <!-- TODO!: Обработка прикреплённого файла -->
+          {% if message["file_id"]%}
+          <div class="chat-footer">
+            <a href="#" class="text-blue-500 no-underline">Файл</a>
+          </div>
+          {% endif %}
+
+          </div>
+      {% endfor %}
+    {% else %}
+    <div class="text-center py-4">
+      <p class="text-gray-400">В этом чате нет сообщений.</p>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

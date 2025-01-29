@@ -4,6 +4,7 @@ import random
 from loguru import logger
 from passlib.hash import pbkdf2_sha512
 from fastapi import HTTPException, BackgroundTasks
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, EmailStr
 
 from api.services.base import BaseService
@@ -31,7 +32,6 @@ class UserService:
             'id': user.id,
             'name': user.name,
             'email': user.email,
-            'password_hash': user.password_hash,
             'is_blocked': user.is_blocked,
             'is_admin': user.is_admin,
             'created': user.created_at.strftime(format=settings.date_time_format)
@@ -94,6 +94,12 @@ class UserService:
                 status_code=401,
                 detail='Wrong password'
             )
+        # Если админ - сразу генерируем токен
+        if user.is_admin:
+            result = await UserService().generate_user_dict(user=user)
+            result['token'] = generate_token(email=email)
+            logger.debug(f"Admin with id `{user.id}` got login token")
+            return result
         # Генерация одноразового кода
         code = "".join(random.choices(string.digits, k=6))
         # Отправка кода по email
@@ -101,10 +107,10 @@ class UserService:
         # Код истечёт через 15 минут
         expiration = datetime.now() + timedelta(minutes=15)
         await BaseService().update(user, last_code=code, code_expiration=expiration)
-        return {
+        return JSONResponse(content={
             'status': 'ok',
             'detail': 'Code is sent'
-        }
+        }, status_code=202)
 
     async def verify_code(self, email: str, code: str):
         """
@@ -138,12 +144,9 @@ class UserService:
                 status_code=401,
                 detail='Wrong code'
             )
-        return {
-            'status': 'ok',
-            'token': generate_token(email=email),
-            'user_id': user.id,
-            'name': user.name
-        }
+        result = await UserService().generate_user_dict(user=user)
+        result['token'] = generate_token(email=email)
+        return result
 
     async def change_password(self, user: User, new_password: str):
         """

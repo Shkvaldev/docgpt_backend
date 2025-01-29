@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="overflow-x-auto">
+    <h2 class="text-lg font-bold mb-2">Пользователи</h2>
+    {% if users|length > 0 %}
+    <table class="min-w-full bg-gray-800 border border-gray-700">
+        <thead>
+            <tr>
+                <th class="py-2 px-4 border-b border-gray-700 text-left text-gray-300">Id</th>
+                <th class="py-2 px-4 border-b border-gray-700 text-left text-gray-300">Имя</th>
+                <th class="py-2 px-4 border-b border-gray-700 text-left text-gray-300">Email</th>
+                <th class="py-2 px-4 border-b border-gray-700 text-left text-gray-300">Админ?</th>
+                <th class="py-2 px-4 border-b border-gray-700 text-left text-gray-300">Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr class="hover:bg-gray-700">
+                <td class="py-2 px-4 border-b border-gray-700">{{ user["id"] }}</td>
+                <td class="py-2 px-4 border-b border-gray-700">{{ user["name"] }}</td>
+                <td class="py-2 px-4 border-b border-gray-700">{{ user["email"] }}</td>
+                <td class="py-2 px-4 border-b border-gray-700">
+                    {% if user["is_admin"] %}
+                        <span class="text-red-500 font-bold">ДА</span>
+                    {% else %}
+                        <span class="text-white font-bold">НЕТ</span>
+                    {% endif %}
+                </td>
+                <td class="py-2 px-4 border-b border-gray-700">
+                    <a href="/users/chats/get/{{ user["id"] }}" class="text-blue-500 hover:text-blue-400">Открыть</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="text-center py-4">
+        <p class="text-gray-400">Нет пользователей для отображения.</p>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
