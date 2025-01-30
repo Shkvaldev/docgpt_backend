@@ -13,6 +13,9 @@ class Settings(BaseSettings):
 
     jwt_secret: str
 
+    client_id: str
+    client_secret: str
+
     api_link: str
     files_dir: str = 'assets/images'
     upload_dir: str = 'static'
