@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mx-auto p-4">
+    <h2 class="text-2xl font-bold mb-4">Создать категорию</h2>
+    <form action="/documents/categories/add" method="POST" class="space-y-4">
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">Название</span>
+            </label>
+            <input type="text" name="name" placeholder="Введите название" class="input input-bordered w-full" required>
+        </div>
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">Описание</span>
+            </label>
+            <textarea name="description" placeholder="Введите описание" class="textarea textarea-bordered w-full" required></textarea>
+        </div>
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">Глубина</span>
+            </label>
+            <input type="number" name="depth" placeholder="Введите глубину" class="input input-bordered w-full" required>
+        </div>
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">Родители</span>
+            </label>
+            <input type="text" name="parents" placeholder="Введите родителей (через запятую)" class="input input-bordered w-full">
+        </div>
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">Дети</span>
+            </label>
+            <input type="text" name="children" placeholder="Введите детей (через запятую)" class="input input-bordered w-full">
+        </div>
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">Документы</span>
+            </label>
+            <input type="text" name="docs" placeholder="Введите документы (через запятую)" class="input input-bordered w-full">
+        </div>
+        <div class="form-control mt-6">
+            <button type="submit" class="btn btn-primary">Создать</button>
+        </div>
+    </form>
+  </div>
+{% endblock %}

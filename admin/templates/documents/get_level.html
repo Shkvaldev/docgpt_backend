@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="overflow-x-auto">
+    <h2 class="text-lg font-bold mb-2">Дерево документов</h2>
+
+    <hr class="m-3" \>  
+
+    <p class="text-red-500 font-bold">DEBUG:</p>
+
+      {{ categories }}
+
+    <hr class="m-3" \>
+
+    <a class="text-blue-500 hover:text-blue-400" href="/documents/categories/add">Add category manually</a>
+
+</div>
+
+{% endblock %}
