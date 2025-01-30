@@ -9,7 +9,7 @@ router = Blueprint(
     import_name='documents_router_get_level'
 )
 
-# Показ документов нулевого уровня (стандартного) 
+# Show documents of default level (depth = 0) 
 @router.get('/levels/get')
 @auth_required
 async def default_route():
@@ -25,7 +25,7 @@ async def default_route():
          categories=categories
     )
 
-# Показ документов одного уровня 
+# Show documents of the same level 
 @router.get('/levels/<depth>/get')
 @auth_required
 async def per_depth_route(depth: int):

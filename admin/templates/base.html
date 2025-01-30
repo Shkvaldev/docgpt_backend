@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Админ панель</title>
+    <title>Admin Panel</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,39 +16,39 @@
 </head>
 <body class="flex flex-col h-screen">
 
-    <!-- Навигация -->
+    <!-- Navigation -->
     <nav class="bg-gray-800 pb-4 pt-4 pl-2">
         <div class="container flex justify-between items-center">
-            <h1 class="text-xl font-bold">Админ панель</h1>
+            <h1 class="text-xl font-bold">Admin Panel</h1>
         </div>
     </nav>
     
     <hr />
 
     {% if not not_authorized %}
-    <!-- Хлебные крожки, только для авторизованных-->
+    <!-- Breadcrumbs, only for authorized-->
     <nav class="bg-gray-700 p-3" aria-label="Breadcrumb">
         <ol class="flex space-x-2">
             <li>
-              <a href="/" class="text-gray-300 hover:text-white">Главная</a>
+              <a href="/" class="text-gray-300 hover:text-white">Main</a>
             </li>
             <li>
                 <span class="text-gray-400">/</span>
             </li>
             <li>
-                <a href="/users/all" class="text-gray-300 hover:text-white">Пользователи</a>
+                <a href="/users/all" class="text-gray-300 hover:text-white">Users</a>
             </li>
             <li>
                 <span class="text-gray-400">/</span>
             </li>
             <li>
-                <a href="/documents/levels/get" class="text-gray-300 hover:text-white">Дерево документов</a>
+                <a href="/documents/levels/get" class="text-gray-300 hover:text-white">Documents</a>
             </li>
         </ol>
     </nav>
     {% endif %}
 
-    <!-- Контент -->
+    <!-- Content -->
     <main class="flex-grow container mx-auto p-4">
         {% block content %}
         {% endblock %}

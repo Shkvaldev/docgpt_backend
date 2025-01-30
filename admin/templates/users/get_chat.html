@@ -3,34 +3,34 @@
 {% block content %}
 
 <div class="bg-gray-800 p-4 rounded-lg shadow-lg border border-gray-300">
-    <h2 class="text-lg font-bold mb-2">Пользовательский чат #{{ chat_id }}</h2>
-    <a href="/users/{{ user_id }}/chats/get" class="text-blue-500 no-underline">Вернуться к пользователю</a>
+    <h2 class="text-lg font-bold mb-2">User's chat #{{ chat_id }}</h2>
+    <a href="/users/{{ user_id }}/chats/get" class="text-blue-500 no-underline">Back to user</a>
     
     {% if messages|length > 0 %}
       {% for message in messages %}
         
-        <!-- Определение роли -->
+        <!-- Roles defining -->
         {% if message["role"] == "bot" %}
           <div class="chat chat-start">
             <div class="chat-header">
-              Бот
+              Bot
               <time class="text-xs opacity-50">{{ message["created_at"] }}</time>
             </div>
         {% else %}
           <div class="chat chat-end">
             <div class="chat-header">
-              Пользователь
+              User
               <time class="text-xs opacity-50">{{ message["created_at"] }}</time>
             </div>
         {% endif %}
           
-          <!-- Содержание сообщения -->
+          <!-- Message context -->
           <div class="chat-bubble">{{ message["content"] }}</div>
           
-          <!-- TODO!: Обработка прикреплённого файла -->
+          <!-- TODO!: Add processing files -->
           {% if message["file_id"]%}
           <div class="chat-footer">
-            <a href="#" class="text-blue-500 no-underline">Файл</a>
+            <a href="#" class="text-blue-500 no-underline">File</a>
           </div>
           {% endif %}
 
@@ -38,7 +38,7 @@
       {% endfor %}
     {% else %}
     <div class="text-center py-4">
-      <p class="text-gray-400">В этом чате нет сообщений.</p>
+      <p class="text-gray-400">There are no messages.</p>
     </div>
     {% endif %}
 </div>

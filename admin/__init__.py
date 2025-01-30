@@ -10,8 +10,8 @@ from admin.routers import routers
 app = Quart(__name__)
 app.secret_key = 'supersecret'
 
-# Базовый CORS
-# TODO: нормально настроить CORS
+# Basic CORS
+# TODO: make propper CORS config
 app = cors(app, allow_origin="*")
 
 @app.get('/')
@@ -19,12 +19,12 @@ app = cors(app, allow_origin="*")
 async def index(): 
     return await render_template('index.html', settings=generate_settings_dict(settings))
 
-# Авторизация
+# Authorization
 @app.route('/login', methods=['GET', 'POST'])
 async def login():
     if request.method == 'GET':
         return await render_template('login.html', not_authorized=True)
-    # Логин в API
+    # Log into API
     logger.success("Logging in")
     form = await request.form
     email = form.get('email')
@@ -38,13 +38,13 @@ async def login():
     return redirect(url_for('index'))
 
 
-# Отлавливаем
+# Handling errors
 @app.errorhandler(404)
 async def not_found(error):
     return await render_template('error.html', error='404 - Не найдено :(', not_authorized=True)
 
 
-# Регистрация роутов
+# Routes registration
 [app.register_blueprint(_route) for _route in routers]
 
 @app.before_request

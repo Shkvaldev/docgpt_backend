@@ -10,7 +10,7 @@ router = Blueprint(
     import_name='users_router_get_chat'
 )
 
-# Показ чата пользователя
+# Showing user's chat
 @router.get('/<user_id>/chats/<chat_id>/get')
 @auth_required
 async def route(user_id, chat_id):

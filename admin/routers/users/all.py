@@ -10,7 +10,7 @@ router = Blueprint(
     import_name='users_router_all'
 )
 
-# Показ всех пользователей
+# Show all users
 @router.get('/all')
 @auth_required
 async def route():
