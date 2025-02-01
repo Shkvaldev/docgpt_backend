@@ -1,3 +1,4 @@
+from typing import List, Optional
 import jwt
 from functools import wraps
 from loguru import logger
@@ -54,3 +55,23 @@ async def auth(email: str, password: str):
     except Exception as e:
         logger.error(f"Failed to auth: {e}")
         raise e
+
+# Utility for splitting args from form, separated via ','
+def split_form_field(data: Optional[str]) -> Optional[List[str]]:
+    """
+    Splits form field (str) with ',' separator.
+
+    If no data - returns None, else - list with args
+    """
+    if not data:
+        return
+
+    if len(data) == 0:
+        return
+    
+    args = [arg for arg in data.split(',') if arg != '']
+
+    if len(args) == 0:
+        return
+
+    return args

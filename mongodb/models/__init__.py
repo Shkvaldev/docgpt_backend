@@ -5,12 +5,18 @@ class Category(Document):
     name: str
     description: str
     depth: int = 0
-    parents: List[Optional[Link["Category"]]] = [] 
-    children: List[Optional[Link["Category"]]] = []
-    docs: List[Optional[Link["Doc"]]] = []
+    parents: List[Link["Category"]] = [] 
+    children: List[Link["Category"]] = []
+    docs: List[Link["Doc"]] = []
+
+    class Settings:
+        use_state_management = True
 
 class Doc(Document):
     name: str
     description: str
     file_id: str
-    parents: List[Optional[Link["Category"]]] = []
+    categories: List[Link["Category"]] = []
+
+    class Settings:
+        use_state_management = True

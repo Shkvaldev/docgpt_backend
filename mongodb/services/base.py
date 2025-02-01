@@ -52,7 +52,7 @@ class MongoBaseService:
         Updating changed model instance in mongodb
         """
         try:
-            await changed_model.sync(merge_strategy=MergeStrategy.local)
+            await changed_model.save()
         except Exception as e:
             raise ValueError(f"Failed to update model: {e}")
 

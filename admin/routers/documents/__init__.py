@@ -1,7 +1,6 @@
 from quart import Blueprint
 
-from .get_level import router as router_get_level
-from .add_category import router as router_add_category
+from .categories import router as router_categories
 
 router = Blueprint(
     name='documents_router',
@@ -10,8 +9,7 @@ router = Blueprint(
 )
 
 routers = [
-    router_get_level,
-    router_add_category
+    router_categories
 ]
 
 [router.register_blueprint(_router) for _router in routers]

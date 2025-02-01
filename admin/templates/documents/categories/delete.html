@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+  .input-readonly {
+      background-color: #374151; 
+      color: #FFFF; 
+      cursor: not-allowed; 
+  }
+</style>
+
+<div class="container mx-auto p-4">
+    <h2 class="text-2xl font-bold mb-4">Deleting category</h2>
+    <form action="/documents/categories/delete" method="POST" class="space-y-4">
+      
+      <div class="form-control">
+
+          <div class="alert alert-error">
+              <div>
+                  <span>WARNING! BE CAREFUL! CHILD CATEGORIES WILL BE ABANDONED!</span>
+              </div>
+          </div>
+
+          <label class="label">
+              <span class="label-text">Category Id</span>
+          </label>
+          <input type="text" name="id" class="input input-bordered input-readonly w-full" value={{ id }} readonly>
+      
+      </div>
+      
+      {% if children|length > 0 %}
+      <div class="form-control">
+
+        <label class="label">
+            <span class="label-text">These categories will be abandoned:</span>
+        </label>
+
+        {% for child in children %}
+          <i>{{ child }}</i>
+        {% endfor %}
+
+      </div>
+      {% endif %}
+
+      <div class="form-control mt-6">
+        <button type="submit" class="btn btn-primary">Delete</button>
+      </div>
+
+    </form>
+</div>
+
+{% endblock %}
