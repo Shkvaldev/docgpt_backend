@@ -21,6 +21,15 @@ services:
     volumes:
       - ./mongodb_data:/data/db
     command: --quiet
+  rabbitmq:
+    image: rabbitmq:4-management
+    restart: unless-stopped
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
   api:
     build:
       dockerfile: api.dockerfile

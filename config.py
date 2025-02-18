@@ -14,6 +14,10 @@ class Settings(BaseSettings):
     jwt_secret: str
 
     api_link: str
+
+    rabbitmq_default_user: str
+    rabbitmq_default_pass: str
+
     files_dir: str = 'assets/images'
     upload_dir: str = 'static'
     date_format: str = '%Y-%m-%d'
