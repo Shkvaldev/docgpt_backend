@@ -49,5 +49,11 @@ class Settings(BaseSettings):
         name = self.postgres_db
         return f'mongodb://{user}:{password}@{host}:27017'
 
+    def get_rabbitmq_uri(self):
+        user = self.rabbitmq_default_user
+        password = self.rabbitmq_default_pass
+        host = self.postgres_host
+        return f'amqp://{user}:{password}@{host}'
+
 
 settings = Settings()

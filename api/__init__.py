@@ -7,6 +7,7 @@ from contextlib import asynccontextmanager
 
 from .v1 import router as router_v1
 from mongodb.database import mongo_init
+from rabbitmq import update_tasks_status  
 
 # Lifespan defining
 @asynccontextmanager

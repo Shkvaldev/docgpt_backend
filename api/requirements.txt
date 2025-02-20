@@ -12,3 +12,4 @@ passlib
 PyJWT
 aiofiles
 beanie
+aio-pika

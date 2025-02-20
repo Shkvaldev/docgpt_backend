@@ -46,6 +46,7 @@ services:
     depends_on:
       - db
       - mongodb
+      - rabbitmq
   admin:
     build:
       dockerfile: admin.dockerfile
