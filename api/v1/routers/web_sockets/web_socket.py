@@ -4,7 +4,7 @@ from typing import Optional, Literal
 from api.utils import get_current_user
 from db.models import User
 from api.services.messages import MessageService
-from connection_manager_ws import ConnectionManager
+from api.connection_manager_ws import ConnectionManager
 
 router = APIRouter(prefix="/ws")
 
