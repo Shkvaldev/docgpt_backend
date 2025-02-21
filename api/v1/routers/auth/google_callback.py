@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Request
 from fastapi_sso.sso.google import GoogleSSO
-from config import Settings
+from config import settings
 
 router = APIRouter(
     prefix="/google_callback"
 )
 
 sso = GoogleSSO(
-    client_id=Settings.client_id,
-    client_secret=Settings.client_secret,
+    client_id=settings.client_id,
+    client_secret=settings.client_secret,
     redirect_uri="http://localhost:5000/auth/callback",
     allow_insecure_http=True,
 )
