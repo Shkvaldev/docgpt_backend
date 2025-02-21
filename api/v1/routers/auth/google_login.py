@@ -8,7 +8,7 @@ router = APIRouter(
 
 sso = GoogleSSO(
     client_id=Settings.client_id,
-    client_secret=Settings.client_secret,
+    client_secret=settings.client_secret,
     redirect_uri="http://localhost:5000/auth/callback",
     allow_insecure_http=True,
 )
