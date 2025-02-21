@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from fastapi_sso.sso.google import GoogleSSO
-from config import Settings
+from config import settings
 
 router = APIRouter(
     prefix="/google_login"
