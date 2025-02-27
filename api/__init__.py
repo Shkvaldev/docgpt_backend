@@ -7,11 +7,15 @@ from contextlib import asynccontextmanager
 
 from .v1 import router as router_v1
 from mongodb.database import mongo_init
+from rabbitmq import create_queues
 
 # Lifespan defining
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Init mongodb
     await mongo_init()
+    # Autocreate needed rabbitmq queues
+    await create_queues()
     yield
 
 app = FastAPI(

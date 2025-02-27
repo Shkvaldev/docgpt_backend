@@ -12,6 +12,24 @@ from mongodb.services import MongoBaseService
 from mongodb.models import TaskStatus
 from config import settings
 
+async def create_queues():
+    """
+    Creates all needed rabbitmq queues
+    """
+    try:
+        connection = await aio_pika.connect_robust(
+            settings.get_rabbitmq_uri(),
+        )
+        async with connection:
+            channel = await connection.channel()
+            await channel.declare_queue("tasks")
+            await channel.declare_queue("task_statuses")
+            logger.success("All needed rabbitmq queues are declarated")
+    except Exception as e:
+        err_msg = f"Failed to create rabbitmq queues: {e}"
+        logger.error(err_msg)
+        raise ValueError(err_msg)
+
 async def push_task(task: Task, headers: Dict[str, str] = {}):
     """
     Pushes task to rabbitmq
@@ -71,8 +89,6 @@ async def update_tasks_status():
 
     async with connection:
         channel = await connection.channel()
-        # Declare queue for tasks
-        await channel.declare_queue("tasks")
         queue = await channel.declare_queue("task_statuses")
         await queue.consume(process_message, no_ack=False)
     
