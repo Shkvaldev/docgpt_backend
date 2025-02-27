@@ -1,5 +1,6 @@
 import json
 import asyncio
+from typing import Dict, Optional
 from loguru import logger
 import uuid
 import aio_pika
@@ -10,7 +11,7 @@ from mongodb.services import MongoBaseService
 from mongodb.models import TaskStatus
 from config import settings
 
-async def push_task(task: Task):
+async def push_task(task: Task, headers: Dict[str, str] = {}):
     """
     Pushes task to rabbitmq
     """
@@ -18,20 +19,25 @@ async def push_task(task: Task):
         settings.get_rabbitmq_uri(),
     )
     async with connection:
-        task_id = str(uuid.uuid4())
         channel = await connection.channel()
+        # Processing headers
+        if "task_id" not in headers:
+            headers["task_id"] = str(uuid.uuid4())
+
         await channel.declare_queue("tasks")
+        
         # Create task
-        await MongoBaseService.create(TaskStatus, task_id=task_id, status="pending", data=task.data)
+        await MongoBaseService.create(TaskStatus, task_id=headers["task_id"], status="pending", data=task.data)
+         
         await channel.default_exchange.publish(
             Message(
                 body=json.dumps(task.data).encode(),
-                headers={"task_id": task_id}
+                headers=headers
                 ),
                 routing_key="tasks",
         )
-        logger.debug(f"New task `{task_id}` pushed to queue")
-        return task_id
+        logger.debug(f"New task `{headers['task_id']}` pushed to queue")
+        return headers["task_id"]
 
 async def update_tasks_status():
     """
@@ -48,8 +54,12 @@ async def update_tasks_status():
             if task_id is None:
                 logger.warning("Received message without task_id. Ignoring message.")
                 return
-
-            task_data = json.loads(message.body.decode())
+            
+            try:
+                task_data = json.loads(message.body.decode())
+            except Exception as e:
+                logger.error(f"Failed to decode task's message body from rabbitmq: task_id `{task_id}`, error: {e}")
+                return
             # Update status here
             try:
                 task_status_doc = await MongoBaseService.find(TaskStatus, filters={"task_id": task_id})
