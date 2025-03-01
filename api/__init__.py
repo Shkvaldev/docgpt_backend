@@ -4,10 +4,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from loguru import logger
 from contextlib import asynccontextmanager
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from .v1 import router as router_v1
 from mongodb.database import mongo_init
-from rabbitmq import create_queues
+from rabbitmq import create_queues, update_tasks_status
 
 # Lifespan defining
 @asynccontextmanager
@@ -16,6 +17,11 @@ async def lifespan(app: FastAPI):
     await mongo_init()
     # Autocreate needed rabbitmq queues
     await create_queues()
+    # Create auto tasks's statuses updater
+    scheduler = AsyncIOScheduler()
+    scheduler.add_job(update_tasks_status, "interval", seconds=3)
+    scheduler.start()
+
     yield
 
 app = FastAPI(

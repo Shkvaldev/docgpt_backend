@@ -5,7 +5,6 @@ from loguru import logger
 from mongodb.models import TaskStatus
 from mongodb.services import MongoBaseService
 
-from rabbitmq import update_tasks_status
 
 router = APIRouter(
     prefix="/status"
@@ -14,7 +13,6 @@ router = APIRouter(
 @router.get('')
 async def route(task_id: str):
     try:
-        await update_tasks_status()
         task_status = await MongoBaseService.find(TaskStatus, filters={"task_id": task_id})
         result = {'status': 'success', 'task': task_status.model_dump()}
         if task_status.status == "done":

@@ -13,3 +13,4 @@ PyJWT
 aiofiles
 beanie
 aio-pika
+apscheduler
