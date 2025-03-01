@@ -1,14 +1,20 @@
 # GPT Docs backend
-Бэкенд для проекта по генерации документов с помощью ИИ.
+Backend for project that generates documents using AI.
 
-Всю информацию о проекте можно получить в документации.
+All project's info can be obtained through the documentation.
 
-## Документация
+## Documentation
 
-Для просмотра документации нужно сделать следующее:
+To access docs you need to do this:
 ```bash
-git clone <репозиторий>
-cd <имя проекта>
+git clone <repo>
+cd <project name>
 pip install -r requirements-docs.txt
 mkdocs serve
 ```
+
+## TODO
+- Integrate tasks into websocket part of the API
+- Add documents creation for graph
+- Create API from dealing with documents graph
+- Add auto cleaning tasks statuses
