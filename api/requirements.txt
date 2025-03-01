@@ -13,3 +13,5 @@ PyJWT
 aiofiles
 beanie
 fastapi-sso
+aio-pika
+apscheduler

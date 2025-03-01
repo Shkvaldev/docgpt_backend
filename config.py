@@ -17,6 +17,10 @@ class Settings(BaseSettings):
     client_secret: str
 
     api_link: str
+
+    rabbitmq_default_user: str
+    rabbitmq_default_pass: str
+
     files_dir: str = 'assets/images'
     upload_dir: str = 'static'
     date_format: str = '%Y-%m-%d'
@@ -47,6 +51,12 @@ class Settings(BaseSettings):
         host = self.postgres_host
         name = self.postgres_db
         return f'mongodb://{user}:{password}@{host}:27017'
+
+    def get_rabbitmq_uri(self):
+        user = self.rabbitmq_default_user
+        password = self.rabbitmq_default_pass
+        host = self.postgres_host
+        return f'amqp://{user}:{password}@{host}'
 
 
 settings = Settings()
