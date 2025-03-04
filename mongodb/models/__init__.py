@@ -21,7 +21,7 @@ class Doc(Document):
     """
     name: str
     description: str
-    file_id: str
+    file_id: str # file path in fact
     categories: List[Link["Category"]] = []
 
     class Settings:

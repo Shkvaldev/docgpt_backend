@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="overflow-x-auto">
+    <h2 class="text-lg font-bold mb-2">Documents</h2>
+
+    {% if documents|length > 0 %}
+      <div class="container mx-auto p-4">
+        {% for document in documents %}
+        <div class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
+            <input type="checkbox" class="peer">
+            <div class="collapse-title text-xl font-medium">
+                {{ document.name }}
+            </div>
+            <div class="collapse-content">
+                <p>{{ document.description }}</p>
+                <div class="actions">
+                  PASS
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+      </div> 
+    {% else %}
+    <div class="text-center py-4">
+        <p class="text-gray-400">No documents found.</p>
+    </div>
+    {% endif %}
+
+    <a class="text-blue-500 hover:text-blue-400" href="/documents/add">Add document</a>
+
+</div>
+
+{% endblock %}

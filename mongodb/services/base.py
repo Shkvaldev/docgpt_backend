@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from beanie import MergeStrategy
 
 class MongoBaseService:
@@ -33,12 +33,22 @@ class MongoBaseService:
 
 
     @staticmethod
-    async def find_all(model, filters: Dict[str, Any]):
+    async def find_all(model, filters: Optional[Dict[str, Any]] = None, offset: int = 0, amount: Optional[int] = None):
         """
         Finding all entities (`filters` is py dict in pymongo style)
         """
         try:
-            result = await model.find(filters, fetch_links=True).to_list()
+            
+            if not filters:
+                result = model.find(fetch_links=True)
+            else:
+                result = model.find(filters, fetch_links=True)
+
+            if not amount:
+                result = await result.to_list()
+            else:
+                result = await result.skip(offset).limit(amount).to_list()
+            
             if not result:
                 raise ValueError("Not found")
             return result

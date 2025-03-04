@@ -9,6 +9,8 @@ from admin.routers import routers
 
 app = Quart(__name__)
 app.secret_key = 'supersecret'
+# Set maximum content lenght to 500 Mb (to handle files)
+app.config['MAX_CONTENT_LENGTH'] = 500 *1000 * 1024
 
 # Basic CORS
 # TODO: make propper CORS config
