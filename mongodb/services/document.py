@@ -1,6 +1,5 @@
 import os
 import uuid
-import aiofiles
 from typing import Dict, Optional
 
 from mongodb.models import Doc
@@ -20,22 +19,11 @@ class DocService:
             self,
             name: str,
             description: str,
-            file_content: bytes,
-            file_name: Optional[str] = None
+            file_path: str
         ) -> Dict[str, str]:
         """
         Creates new document in mongodb.
         """
-        # Saving file
-        if file_name:
-            file_path = f"{settings.upload_dir}/{file_name}"
-        else:
-            file_name = str(uuid.uuid4())+".docx"
-            file_path = f"{settings.upload_dir}/{file_name}"
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
-        
-        async with aiofiles.open(file_path, 'wb') as f:
-            await f.write(file_content)
         
         # Saving to mongodb
         document = await MongoBaseService().create(

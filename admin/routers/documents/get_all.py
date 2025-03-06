@@ -29,6 +29,6 @@ async def default_route():
     except Exception as e:
         logger.error(f"Failed to get documents: {e}")
         documents = []
-    return await render_template('documents/get.html', 
+    return await render_template('documents/get_all.html', 
          documents=documents
     )
