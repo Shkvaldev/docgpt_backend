@@ -14,7 +14,6 @@ mkdocs serve
 ```
 
 ## TODO
-- Integrate tasks into websocket part of the API
-- Add documents creation for graph
+- Integrate tasks into websocket part of the API (make better)
 - Create API from dealing with documents graph
 - Add auto cleaning tasks statuses
